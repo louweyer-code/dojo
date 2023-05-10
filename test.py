@@ -4,18 +4,10 @@ grid = [
     [2, 1, 0]
     ]
 
-# beaks = [['-','-','-'],
-#          [1, 2, 3]]
-
 def print_grid():
     for row in grid:
         print(row)
 
-# def print_legend():
-#     spacer = ['-', '-', '-']
-#     column = [1, 2, 3]
-#     print(' '.join(map(str, spacer)))
-#     print(' '.join(map(str, column)))
 
 def check_move(start, end):
     if 0 not in grid[end]:
@@ -26,17 +18,41 @@ def check_move(start, end):
         print('same beaker')
         return False
     
-    start_cell_top = max([num for num in grid[start] if num != 0])
-    end_cell_top = max([num for num in grid[end] if num != 0])
-    if start_cell_top != end_cell_top:
-        print('color doesnt match')
+    full = len([cell for cell in grid[start] if cell != 0])
+    empty = len([cell for cell in grid[end] if cell == 0])
+    
+    if full > empty:
+        print('beaker is full')
+        return False
+    
+    start_number =  None
+    end_number = None
+
+    for i in reversed(grid[start]):
+        if grid[start][i] != 0:
+            start_number = grid[start][i]
+            break
+
+    for i in reversed(grid[end]):
+        if grid[start][i] != 0:
+            end_number = grid[end][i]
+            break
+
+    if start_number != end_number:
+        print('number doesnt match')
         return False
     
     return True
-    
 
-#for row in grid:
-    #print(row)
+    # start_cell_top = max([num for num in grid[start] if num != 0])
+    # end_cell_top = max([num for num in grid[end] if num != 0])
+
+    # if start_cell_top != end_cell_top:
+    #     print('color doesnt match')
+    #     return False
+    
+    return True
+    
 
 while True:
     print_grid()
@@ -45,6 +61,7 @@ while True:
 
     if check_move(start, end):
         print('legal move')
+        
 
     else:
         print('invalid move')
